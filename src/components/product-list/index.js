@@ -6,21 +6,21 @@ export default class ProductList extends Component {
 		super(props);
 		this.state = {
 			products: this.props.products,
+			cart: this.props.cart,
 		};
 		console.log(this.props.products);
 	}
 	addProductToCart = (product, index) => {
 		let updatedProduct = { ...product };
-
 		updatedProduct.cartQuantity = updatedProduct.cartQuantity + 1;
-		console.log(updatedProduct);
-
 		this.setState((this.state.products[index] = updatedProduct));
+		this.props.addToCart({ item: product.name, quantity: updatedProduct.cartQuantity });
 	};
 	removeProductToCart = (product, index) => {
 		let updatedProduct = { ...product };
 		updatedProduct.cartQuantity = updatedProduct.cartQuantity - 1;
 		this.setState((this.state.products[index] = updatedProduct));
+		this.props.removeFromCart({ item: product.name, quantity: updatedProduct.cartQuantity });
 	};
 
 	render() {
