@@ -23,28 +23,29 @@ class App extends Component {
 		};
 	}
 	addToCart = (product) => {
-		for (let key in this.state.cart.items) {
-			if (this.state.cart.items[key].item === product.item) {
-				this.setState((this.state.cart.items[key] = product));
+		let updatedCart = { ...this.state.cart };
+		for (let key in updatedCart.items) {
+			if (updatedCart.items[key].item === product.item) {
+				updatedCart.items[key] = product;
+				this.setState({ cart: updatedCart });
 				return;
 			}
 		}
-		let updtatedCartItems = [...this.state.cart.items];
-		updtatedCartItems.push(product);
-		this.setState((this.state.cart.items = updtatedCartItems));
+		updatedCart.items.push(product);
+		this.setState({ cart: updatedCart });
 	};
 
 	removeFromCart = (product) => {
-		for (let key in this.state.cart.items) {
-			if (this.state.cart.items[key].item === product.item) {
+		let updtatedCart = { ...this.state.cart };
+		for (let key in updtatedCart.items) {
+			if (updtatedCart.items[key].item === product.item) {
 				if (product.quantity !== 0) {
-					this.setState((this.state.cart.items[key] = product));
+					updtatedCart.items[key] = product;
+					this.setState({ cart: updtatedCart });
 					return;
 				}
-
-				let updtatedCartItems = [...this.state.cart.items];
-				updtatedCartItems.splice(key, 1);
-				this.setState((this.state.cart.items = updtatedCartItems));
+				updtatedCart.items.splice(key, 1);
+				this.setState({ cart: updtatedCart });
 			}
 		}
 	};
